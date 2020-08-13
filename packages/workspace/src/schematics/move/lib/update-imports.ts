@@ -67,7 +67,9 @@ export function updateImports(schema: Schema) {
           const path = contents.compilerOptions.paths[
             projectRef.from
           ] as string[];
-
+          if (!path) {
+            throw new Error(`unable fo find `${projectRef.from}` in ${tsConfigPath} compilerOptions.paths`);
+          }
           contents.compilerOptions.paths[projectRef.to] = path.map((x) =>
             x.replace(new RegExp(projectRoot.from, 'g'), projectRoot.to)
           );
